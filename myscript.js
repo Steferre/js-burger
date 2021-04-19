@@ -2,19 +2,19 @@
 
 // recupero i valori dei campi che l'utente deve compilare oppure scegliere tramite le checkbox
 
-var userBurgerName = document.getElementById('name');
-console.log(userBurgerName);
+
+
 //var userCouponCode = document.getElementById('coupon');
 //console.log(userCouponCode);
 // per i valori scelti tramite le checkbox posso procedere sia singolarmente, sia con il queryselector
-
+/*
 var cheeseOption = document.getElementById('cheese-add');
 var tomatoOption = document.getElementById('tomato-add');
 var eggOption = document.getElementById('egg-add');
 var lettuceOption = document.getElementById('lettuce-add');
 var mustardOption = document.getElementById('mustard-add');
 var ketchupOption = document.getElementById('ketchup-add');
-
+*/
 // essendo tutti degli html element posso usare la proprietà .value per vederne il valore
 // esempio se faccio console.log(tomatoOption.value); esce 2 che è il valore impostato in html per quel ingrediente
 // per non scrivere tutti gli ingredienti singolarmente, posso usare
@@ -59,51 +59,58 @@ var btnCalculate = document.getElementById('button');
 var basePrice = 50;
 
 var availablePromoCodes = ['A9B8C7D6E5', 'F4G3H2I1L0', 'M9N1O5P3Q7'];
-console.log(availablePromoCodes);
+
+
 
 
 btnCalculate.addEventListener('click', function() {
 
-    for (var i = 0; i < ingredientsOption.length; i++) {
+    //nome panino mancante
+    var userBurgerName = document.getElementById('name').value;
 
-        var ingredientUserChoise = ingredientsOption[i];
-    
-        if (ingredientUserChoise.checked) {
-            basePrice += parseInt(ingredientUserChoise.value);
+    var totalPrice = basePrice;
+    if (userBurgerName === "") {
+        alert('Devi inserire il nome per il tuo panino!!!')
+    } else {
 
+        for (var i = 0; i < ingredientsOption.length; i++) {
+            var ingredientUserChoise = ingredientsOption[i];
+            
+            if (ingredientUserChoise.checked) {
+                totalPrice += parseInt(ingredientUserChoise.value);
+            }
+            
         }
-    
-    }
+        var discountPrice;
+        var userCouponCode = document.getElementById('coupon').value;
+        console.log(userCouponCode);
 
-    var discountPrice;
+        
 
-    console.log(basePrice);
-    
+        
+        var codeFound = false;
 
-    var userCouponCode = document.getElementById('coupon').value;
-    console.log(userCouponCode);
 
-    for (j = 0; j < availablePromoCodes.length; j++) {
-        /*
-        if(userCouponCode === availablePromoCodes[j]) {
-          
-            discountPrice = basePrice - ((basePrice * 25) / 100);
+        for (j = 0; j < availablePromoCodes.length; j++) {
+            
+            if(userCouponCode === availablePromoCodes[j]) {
+                
+                codeFound = true;
+                //discountPrice = basePrice - ((basePrice * 25) / 100);
+                //document.getElementById('price').innerText= discountPrice;
+            }     
+        }
+        if (codeFound === true) {
+            discountPrice = totalPrice - ((totalPrice * 25) / 100);
             document.getElementById('price').innerText= discountPrice;
         } else {
-
-            document.getElementById('price').innerText= basePrice;
-
-        }*/
-
-        addDiscountCoupon(userCouponCode, availablePromoCodes[j]);
-
-
+            document.getElementById('price').innerText= totalPrice;
+        }
     }
 
-    
 
 })
-// definisco un array con all'interno dei coupon sconto validi
+
 
 
 
@@ -112,8 +119,8 @@ btnCalculate.addEventListener('click', function() {
 
 // devo creare una funzione che controlla se il codice coupon è valido applica lo sconto del 25%
 // in caso contrario non altera il prezzo 
-
-function addDiscountCoupon(couponCode, availableCode) {
+/*
+function addDiscountCoupon(couponCode, availableCode, prezzo) {
 
     if(couponCode === availableCode) {
   
@@ -127,7 +134,7 @@ function addDiscountCoupon(couponCode, availableCode) {
         //document.getElementById('price').innerText= basePrice;
     }
 
-}
+}*/
 
 
 
